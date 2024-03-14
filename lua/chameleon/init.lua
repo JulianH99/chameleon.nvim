@@ -1,10 +1,15 @@
 local lualine = require("lualine")
 
--- @class PeacockConfig
+-- TODO: add support for other path separators
+-- TODO: use plenary for file operations
+-- TODO: write readme and vim documentation
+-- TODO: add support for changing several lualine components instead of one
+
+-- @class ChameleonConfig
 -- @field config_path string
 -- @field lualine {section: string, component_index: number, change: 'fg'|'bg'}
-local PeacockConfig = {
-  config_path = vim.fs.normalize(vim.fn.stdpath("data") .. "\\lualine-peacock.json"),
+local ChameleonConfig = {
+  config_path = vim.fs.normalize(vim.fn.stdpath("data") .. "\\chameleon.json"),
   lualine = {
     section = "c",
     component_index = 1,
@@ -13,7 +18,7 @@ local PeacockConfig = {
 }
 
 -- @class M
--- @field config PeacockConfig
+-- @field config ChameleonConfig
 -- @field color_config table
 -- @field pick_color function
 -- @field assign_color function
@@ -106,9 +111,9 @@ function M.check_config_file()
   end
 end
 
--- @param config PeacockConfig
+-- @param config ChameleonConfig
 function M.setup(config)
-  local local_config = vim.tbl_deep_extend("force", PeacockConfig, config or {})
+  local local_config = vim.tbl_deep_extend("force", ChameleonConfig, config or {})
 
   M.config = local_config
 

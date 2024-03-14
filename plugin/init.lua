@@ -1,7 +1,7 @@
-vim.api.nvim_create_user_command("RainbowPickColor", function()
-  require("lualine-peacock").pick_color()
+vim.api.nvim_create_user_command("ChamPickColor", function()
+  require("chameleon").pick_color()
 end, {})
 
-vim.api.nvim_create_user_command("RainbowClearAllConfig", function()
-  require("lualine-peacock").clear_configuration()
+vim.api.nvim_create_user_command("ChamClearAllConfig", function()
+  require("chameleon").clear_configuration()
 end, {})
