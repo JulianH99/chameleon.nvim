@@ -3,8 +3,7 @@
 
 The idea of this project is to provide a similar functionality to peacock in
 vscode.  
-Currently, the plugin only supports modifying lualine components (actually, one
-component, but support for more than one component and section is planned)' background (`bg`) or foreground (`fg`) color
+Currently, the plugin only supports modifying lualine components' background (`bg`) or foreground (`fg`) color
 
 
 ## Installation
@@ -26,15 +25,19 @@ Default options are
 require("chameleon").setup({
   config_path = vim.fs.normalize(vim.fn.stdpath("data") .. "\\chameleon.json"),
   lualine = {
-    section = "c", -- lualine section letter
-    component_index = 1, -- beware lua is 1-indexed
-    change = "fg", -- or bg to change background
+    { 
+      section = "c", -- lualine section letter
+      component_index = 1, -- beware lua is 1-indexed
+      change = "fg", -- or bg to change background 
+    },
   },
 })
 ```
-You can change this options as you like
+You can change this options as you like and specify as many components as you
+want
 
 ## Usage
+
 ### Picking a color
 
 There's a builtin command called `:ChamPickColor`, which will open a `vim.ui.input`

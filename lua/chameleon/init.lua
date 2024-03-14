@@ -1,19 +1,16 @@
 local lualine = require("lualine")
 
--- TODO: add support for other path separators
 -- TODO: use plenary for file operations
--- TODO: write readme and vim documentation
--- TODO: add support for changing several lualine components instead of one
+-- TODO: support for selecting a proper foreground when using bg option
+-- TODO: write help file
 
 -- @class ChameleonConfig
 -- @field config_path string
--- @field lualine {section: string, component_index: number, change: 'fg'|'bg'}
+-- @field lualine {{section: string, component_index: number, change: 'fg' | 'bg'}}
 local ChameleonConfig = {
-  config_path = vim.fs.normalize(vim.fn.stdpath("data") .. "\\chameleon.json"),
+  config_path = vim.fs.normalize(vim.fn.stdpath("data") .. "/chameleon.json"),
   lualine = {
-    section = "c",
-    component_index = 1,
-    change = "fg",
+    { section = "c", component_index = 1, change = "fg" },
   },
 }
 
@@ -23,8 +20,7 @@ local ChameleonConfig = {
 -- @field pick_color function
 -- @field assign_color function
 -- @field check_config_file function
--- @fiend setup function
-
+-- @field setup function
 local M = {
   config = {},
   color_config = {},
@@ -86,8 +82,9 @@ function M.assign_color(color)
   local lualine_config = lualine.get_config()
   local local_config = M.config
   if color then
-    lualine_config.sections["lualine_" .. local_config.lualine.section][local_config.lualine.component_index].color[local_config.lualine.change] =
-      color
+    for _, conf in ipairs(local_config.lualine) do
+      lualine_config.sections["lualine_" .. conf.section][conf.cmponent_index].color[conf.change] = color
+    end
     lualine.setup(lualine_config)
   end
 end
