@@ -83,7 +83,7 @@ function M.assign_color(color)
   local local_config = M.config
   if color then
     for _, conf in ipairs(local_config.lualine) do
-      lualine_config.sections["lualine_" .. conf.section][conf.cmponent_index].color[conf.change] = color
+      lualine_config.sections["lualine_" .. conf.section][conf.component_index].color[conf.change] = color
     end
     lualine.setup(lualine_config)
   end
