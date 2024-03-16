@@ -1,6 +1,4 @@
 # Cheameleon.nvim
-
-
 The idea of this project is to provide a similar functionality to peacock in
 vscode.  
 Currently, the plugin only supports modifying lualine components' background (`bg`) or foreground (`fg`) color
@@ -53,3 +51,7 @@ There's also a command to clear all the saved colors and empty the configuration
 file. The command `:ChamClearConfig` will clean the config file and get rid
 of all customizations (another command to clear only the current working dir's
 config is planned).
+
+
+## TODO
+- Select automatic foreground color when background color option is used.
