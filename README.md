@@ -60,7 +60,7 @@ config is planned).
 
 ## TODO
 - [x] Select automatic foreground color when background color option is used.
-- [ ] Command to clear current cwd color configuration
-- [ ] Use plenary.nvim for file operations
+- [x] Command to clear current cwd color configuration
+- [x] Use plenary.nvim for file operations
 - [ ] Allow for different fg and bg colors per cwd (right now it uses the same
 color for whatever section was configured in the `lualine` config section

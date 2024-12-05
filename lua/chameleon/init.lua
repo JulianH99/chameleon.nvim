@@ -1,5 +1,6 @@
 local lualine = require("lualine")
 local util = require("chameleon.util")
+local Path = require("plenary.path")
 
 -- TODO: use plenary for file operations
 -- TODO: support for selecting a proper foreground when using bg option
@@ -19,6 +20,22 @@ local ChameleonConfig = {
 	light_fg = "#222",
 }
 
+local function write_data(data, config)
+	Path:new(config):write(vim.json.encode(data), "w")
+end
+
+local function read_data(config)
+	local p = Path:new(config)
+
+	if not p:exists() then
+		write_data("", config)
+	end
+
+	local data = p:read()
+
+	return vim.json.decode(data or "{}")
+end
+
 -- @class M
 -- @field config ChameleonConfig
 -- @field color_config table
@@ -34,11 +51,13 @@ local M = {
 -- Clears configuration from config file by erasing all data
 -- @return nil
 function M.clear_configuration()
-	local handler = io.open(M.config.config_path, "w")
-	if handler then
-		handler:write("")
-		handler:close()
-	end
+	write_data("", M.config.config_path)
+end
+
+function M.clear_cwd_configuration()
+	local path = vim.loop.cwd()
+
+	M.save_configuration(path, nil)
 end
 
 -- @param path string
@@ -47,38 +66,23 @@ end
 function M.save_configuration(path, color)
 	M.color_config[path] = color
 
-	local handler = io.open(M.config.config_path, "w")
-	if handler then
-		handler:write(vim.fn.json_encode(M.color_config))
-		handler:close()
-	end
+	write_data(M.color_config, M.config.config_path)
 end
 
 -- @return table
 function M.read_configuration()
-	local handler = io.open(M.config.config_path, "r")
-
-	local config = handler and handler:read("*a")
-
-	if handler then
-		handler:close()
-	end
-
-	if not config or config == "" then
-		return {}
-	end
-
-	return vim.fn.json_decode(config) or {}
+	return read_data(M.config.config_path)
 end
 
 -- @param path string
 -- @return string
 function M.get_color_for_path(path)
-	local config = M.read_configuration()
+	local config = M.color_config or M.read_configuration()
 
-	if config[path] then
+	if config ~= nil and config[path] then
 		return config[path]
 	end
+	return nil
 end
 
 -- @param color string
@@ -86,7 +90,6 @@ end
 function M.assign_color(color)
 	local lualine_config = lualine.get_config()
 	local local_config = M.config
-	print(vim.inspect(local_config))
 	if color then
 		for _, conf in ipairs(local_config.lualine) do
 			if lualine_config.sections["lualine_" .. conf.section] then
@@ -158,7 +161,9 @@ function M.setup(config)
 	local current_cwd = vim.loop.cwd()
 	local color = M.get_color_for_path(current_cwd)
 
-	M.assign_color(color)
+	if color ~= nil then
+		M.assign_color(color)
+	end
 end
 
 return M
