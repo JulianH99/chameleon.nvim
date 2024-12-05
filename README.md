@@ -21,18 +21,23 @@ Default options are
 
 ```lua
 require("chameleon").setup({
-  config_path = vim.fs.normalize(vim.fn.stdpath("data") .. "\\chameleon.json"),
-  lualine = {
-    { 
-      section = "c", -- lualine section letter
-      component_index = 1, -- beware lua is 1-indexed
-      change = "fg", -- or bg to change background 
+    config_path = vim.fs.normalize(vim.fn.stdpath("data") .. "\\chameleon.json"),
+    lualine = {
+        { 
+            section = "c", -- lualine section letter
+            component_index = 1, -- beware lua is 1-indexed
+            change = "fg", -- or bg to change background 
+        },
     },
-  },
+    dark_fg = '#fff',
+    light_fg = '#222'
 })
 ```
 You can change this options as you like and specify as many components as you
-want
+want.
+By default, chameleon will pick a dark or light foreground color when you pick
+the bg option for a component, these colors will be picked from the `dark_fg`
+and `light_fg` options in the configuration 
 
 ## Usage
 
@@ -54,4 +59,8 @@ config is planned).
 
 
 ## TODO
-- Select automatic foreground color when background color option is used.
+- [x] Select automatic foreground color when background color option is used.
+- [ ] Command to clear current cwd color configuration
+- [ ] Use plenary.nvim for file operations
+- [ ] Allow for different fg and bg colors per cwd (right now it uses the same
+color for whatever section was configured in the `lualine` config section
