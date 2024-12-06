@@ -51,12 +51,25 @@ calling `require("chameleon").pick_color()`
 The color will be tied to your `cwd` (`vim.loop.cwd()`) and will be
 automatically saved on the plugin's config file.
 
+> [!important] 
+> At the moment, only complete hex colors are accepted (e.g #558866). The short
+> syntax is not supported yet
+
+### Clearing the color for cwd
+You can remove the configured color for the current project or cwd with the
+`:ChamClearCwd` command.
+
 ### Erasing the confgiguration
 There's also a command to clear all the saved colors and empty the configuration 
 file. The command `:ChamClearConfig` will clean the config file and get rid
 of all customizations (another command to clear only the current working dir's
 config is planned).
 
+### Summary
+
+- `:ChamPickColor` - Pick a hex color for current cwd
+- `:ChamClearCwd` - Remove the picked color for currend cwd
+- `:ChamClearConfig` - Remove all configuration for all registered cwds
 
 ## TODO
 - [x] Select automatic foreground color when background color option is used.

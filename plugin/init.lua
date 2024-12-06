@@ -8,4 +8,4 @@ end, {})
 
 vim.api.nvim_create_user_command("CharmClearCwd", function()
 	require("chameleon").clear_cwd_configuration()
-end)
+end, {})
